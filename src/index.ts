@@ -1,3 +1,5 @@
+import 'reflect-metadata';
+import { createConnection } from 'typeorm';
 import * as http from 'http';
 import Server from './server';
 
@@ -7,10 +9,13 @@ Server.set('port', port);
 
 console.log(`Server listening on port ${port}`);
 
-const server: http.Server = http.createServer(Server);
+createConnection()
+	.then(async (connection) => {
+		const server: http.Server = http.createServer(Server);
+		server.listen(port);
 
-server.listen(port);
+		server.on('error', (error) => console.log(error));
 
-server.on('error', (error) => console.log(error));
-
-server.on('listening', () => console.log('start'));
+		server.on('listening', () => console.log('start'));
+	})
+	.catch((error) => console.log('TypeORM connection error: ', error));

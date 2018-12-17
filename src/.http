@@ -1,10 +1,14 @@
-POST http://localhost:3000/user/
+POST http://localhost:3000/auth/
 content-type: application/json
 
 {
-    "email": "wooooooak@gmail.com",
-    "name" : "leeyongjun"
+    "email": "wooooooak2@gmail.com",
+    "name" : "leeyongjun2",
+    "photoUrl" : ""
 }
 
 
 ####
+
+GET http://localhost:3000/user/test
+auth-header: "sdfsefsdf"

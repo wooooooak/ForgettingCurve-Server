@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import UserController from '../controllers/UserControl';
+import AuthMiddleWare from '../middleware/auth';
 
 export default class UserRouter {
 	public router: Router;
@@ -14,6 +15,10 @@ export default class UserRouter {
      */
 	public routes(): void {
 		this.router.get('/', () => console.log('get!!'));
-		this.router.post('/', new UserController().socialLogin);
+		this.router.get(
+			'/test',
+			AuthMiddleWare.authByToken,
+			new UserController().test
+		);
 	}
 }

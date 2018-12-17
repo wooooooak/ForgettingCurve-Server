@@ -7,6 +7,8 @@ export class User {
 
     @Column() name!: string;
     
+    @Column() photoUrl!: string;
+
     @OneToMany(type=>Study, study => study.user)
     studies!: Study[]
 }

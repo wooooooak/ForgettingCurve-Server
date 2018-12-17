@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import UserController from '../controllers/UserControl';
 
 export default class UserRouter {
 	public router: Router;
@@ -13,6 +14,6 @@ export default class UserRouter {
      */
 	public routes(): void {
 		this.router.get('/', () => console.log('get!!'));
-		this.router.post('/', () => console.log('p9ost!!'));
+		this.router.post('/', new UserController().socialLogin);
 	}
 }

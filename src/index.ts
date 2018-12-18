@@ -17,5 +17,11 @@ createConnection()
 		server.on('error', (error) => console.log(error));
 
 		server.on('listening', () => console.log('start'));
+		process.on('SIGINT', () => {
+			server.close(() => {
+				console.log('server closed');
+				process.exit(0);
+			});
+		});
 	})
 	.catch((error) => console.log('TypeORM connection error: ', error));

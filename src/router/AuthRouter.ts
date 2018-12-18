@@ -9,6 +9,6 @@ export default class AuthRouter {
 		this.routes();
 	}
 	public routes(): void {
-		this.router.post('/', new AuthController().socialLogin);
+		this.router.post('/login', new AuthController().socialLogin);
 	}
 }

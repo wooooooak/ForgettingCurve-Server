@@ -20,5 +20,10 @@ export default class StudyRouter {
 			AuthMiddleWare.authByToken,
 			new StudyController().addStudy
 		);
+		this.router.get(
+			'/todayStudies',
+			AuthMiddleWare.authByToken,
+			new StudyController().getTodayStudy
+		);
 	}
 }

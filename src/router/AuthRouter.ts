@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import AuthController from '../controllers/AuthControl';
+import AuthController from '../controllers/AuthController';
 
 export default class AuthRouter {
 	public router: Router;

@@ -1,9 +1,9 @@
-import { Entity, Column, PrimaryColumn, OneToMany, ManyToOne } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { User } from './User';
 
 @Entity()
 export class Study {
-    @PrimaryColumn()
+    @PrimaryGeneratedColumn()
     id!: string;
 
     @Column("text")
@@ -14,5 +14,11 @@ export class Study {
 
     @ManyToOne(type => User, user => user.studies)
     user!: User
+
+    @CreateDateColumn()
+    createdAt!: string;
+
+    @UpdateDateColumn({ type: "timestamp" })
+    updatedAt!: number;
 
 }

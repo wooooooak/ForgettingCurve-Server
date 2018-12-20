@@ -24,9 +24,14 @@ auth-header: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Indvb29vb29hazJAZ2
 
 {
     "title": "first",
-    "content": "content!"
+    "content": "content!",
+    "createdAt": "2018-11-19 14:02:22.239097"
 }
 
 ### get TODAY STUDIES
 GET http://localhost:3000/study/todayStudies
+auth-header: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Indvb29vb29hazJAZ21haWwuY29tIiwibmFtZSI6ImxlZXlvbmdqdW4yIiwicGhvdG9VcmwiOiIiLCJpYXQiOjE1NDUxNDI4MzMsImV4cCI6MTU0NTc0NzYzMywiaXNzIjoibGVleW9uZ2p1biJ9.lIy9POxpED5XGXlKzJNqeuKCHOfRg4Fq6ZErthk-iT0
+
+### get REVEIW STUDIES
+GET http://localhost:3000/study/reviewStudies
 auth-header: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Indvb29vb29hazJAZ21haWwuY29tIiwibmFtZSI6ImxlZXlvbmdqdW4yIiwicGhvdG9VcmwiOiIiLCJpYXQiOjE1NDUxNDI4MzMsImV4cCI6MTU0NTc0NzYzMywiaXNzIjoibGVleW9uZ2p1biJ9.lIy9POxpED5XGXlKzJNqeuKCHOfRg4Fq6ZErthk-iT0

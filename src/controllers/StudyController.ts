@@ -27,6 +27,7 @@ class StudyController {
 				newStudy.title = title;
 				newStudy.content = content;
 				newStudy.user = user;
+				newStudy.createdAt = '2018-12-19';
 			}
 			await studyRepo.save(newStudy);
 			res.status(200).json(newStudy);
@@ -36,7 +37,10 @@ class StudyController {
 		}
 	};
 
-	public getTodayStudy = async (req: express.Request, res: express.Response) => {
+	public getTodayStudies = async (
+		req: express.Request,
+		res: express.Response
+	) => {
 		const { email } = req.decodedUser!;
 		const today = moment().format('YYYY-MM-DD');
 		try {
@@ -47,6 +51,31 @@ class StudyController {
 			});
 			res.status(200).json(todayStudies);
 		} catch (error) {
+			res.status(500).json(error);
+		}
+	};
+
+	public getReviewStudies = async (
+		req: express.Request,
+		res: express.Response
+	) => {
+		const { email } = req.decodedUser!;
+		const day1 = moment().add(-1).format('YYYY-MM-DD');
+		const day7 = moment().add(-7).format('YYYY-MM-DD');
+		const day30 = moment().add(-30).format('YYYY-MM-DD');
+		try {
+			const studyRepo = getManager().getRepository(Study);
+			const reviewStudies = await studyRepo.find({
+				user: email,
+				createdAt: Raw(
+					(alias) =>
+						`DATE(${alias}) = '${day1}' and DATE(${alias}) = '${day7}' and DATE(${alias}) = '${day30}'`
+				)
+			});
+			console.log(reviewStudies);
+			res.status(200).json(reviewStudies);
+		} catch (error) {
+			console.log(error);
 			res.status(500).json(error);
 		}
 	};

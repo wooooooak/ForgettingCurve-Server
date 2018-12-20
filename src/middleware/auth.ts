@@ -9,13 +9,14 @@ export default class AuthMiddleWare {
 		next: express.NextFunction
 	) => {
 		const token: string = req.headers['auth-header'] || req.query.token;
-		if (!token) {
-			console.log('헤더에 토큰이 없습니다.');
-			res.status(403).json({
-				message: 'not logged in'
-			});
-		}
+		console.log(req.headers);
 		try {
+			if (!token) {
+				console.log('헤더에 토큰이 없습니다.');
+				res.status(403).json({
+					message: 'not logged in'
+				});
+			}
 			const decodedUser: User = await new Jwt().decodeToken(token);
 			req.decodedUser = decodedUser;
 			next();

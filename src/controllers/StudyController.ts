@@ -60,9 +60,9 @@ class StudyController {
 		res: express.Response
 	) => {
 		const { email } = req.decodedUser!;
-		const day1 = moment().add(-1).format('YYYY-MM-DD');
-		const day7 = moment().add(-7).format('YYYY-MM-DD');
-		const day30 = moment().add(-30).format('YYYY-MM-DD');
+		const day1 = moment().add(-1, 'd').format('YYYY-MM-DD');
+		const day7 = moment().add(-7, 'd').format('YYYY-MM-DD');
+		const day30 = moment().add(-30, 'd').format('YYYY-MM-DD');
 		try {
 			const studyRepo = getManager().getRepository(Study);
 			const reviewStudies = await studyRepo.find({

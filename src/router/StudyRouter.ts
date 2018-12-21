@@ -11,7 +11,7 @@ export default class StudyRouter {
 
 	private routes(): void {
 		this.router.get(
-			'/all/:limit',
+			'/all/:offset',
 			AuthMiddleWare.authByToken,
 			new StudyController().getAll
 		);

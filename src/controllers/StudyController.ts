@@ -6,17 +6,24 @@ import { User } from '../models/User';
 import { Study } from '../models/Study';
 
 class StudyController {
+	//10일 단위로 데이터를 뿌려주자
 	public getAll = async (req: express.Request, res: express.Response) => {
 		try {
 			const { email } = req.decodedUser!;
-			const { limit } = req.params;
+			const { offset } = req.params;
+			const prevDay = moment()
+				.add(-offset - 10, 'd')
+				.format('YYYY-MM-DD');
+			const postDay = moment().add(-offset, 'd').format('YYYY-MM-DD');
 			const studyRepo = getManager().getRepository(Study);
 			const stories = await studyRepo.find({
 				where: {
-					user: email
+					user: email,
+					createdAt: Raw(
+						(alias) =>
+							`DATE(${alias}) BETWEEN  '${prevDay}' AND '${postDay}'`
+					)
 				},
-				take: 10,
-				skip: limit,
 				order: {
 					createdAt: 'DESC'
 				}

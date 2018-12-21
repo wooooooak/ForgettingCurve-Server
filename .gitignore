@@ -2,3 +2,4 @@ node_modules/
 build/
 ormconfig.json
 .env
+src/.http

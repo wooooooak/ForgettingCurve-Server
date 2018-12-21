@@ -69,7 +69,7 @@ class StudyController {
 				user: email,
 				createdAt: Raw(
 					(alias) =>
-						`DATE(${alias}) = '${day1}' and DATE(${alias}) = '${day7}' and DATE(${alias}) = '${day30}'`
+						`DATE(${alias}) = '${day1}' or DATE(${alias}) = '${day7}' or DATE(${alias}) = '${day30}'`
 				)
 			});
 			console.log(reviewStudies);

@@ -11,9 +11,7 @@ class StudyController {
 		try {
 			const { email } = req.decodedUser!;
 			const { offset } = req.params;
-			const prevDay = moment()
-				.add(-offset - 10, 'd')
-				.format('YYYY-MM-DD');
+			const prevDay = moment().add(-offset - 9, 'd').format('YYYY-MM-DD');
 			const postDay = moment().add(-offset, 'd').format('YYYY-MM-DD');
 			const studyRepo = getManager().getRepository(Study);
 			const stories = await studyRepo.find({

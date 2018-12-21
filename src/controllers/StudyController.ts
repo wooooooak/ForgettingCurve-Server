@@ -8,8 +8,21 @@ import { Study } from '../models/Study';
 class StudyController {
 	public getAll = async (req: express.Request, res: express.Response) => {
 		try {
-			console.log(req.decodedUser);
-			res.status(200).json(req.decodedUser);
+			const { email } = req.decodedUser!;
+			const { limit } = req.params;
+			const studyRepo = getManager().getRepository(Study);
+			const stories = await studyRepo.find({
+				where: {
+					user: email
+				},
+				take: 10,
+				skip: limit,
+				order: {
+					createdAt: 'DESC'
+				}
+			});
+
+			res.status(200).json(stories);
 		} catch (error) {
 			res.status(500).json(error);
 		}
@@ -46,8 +59,10 @@ class StudyController {
 		try {
 			const studyRepo = getManager().getRepository(Study);
 			const todayStudies = await studyRepo.find({
-				user: email,
-				createdAt: Raw((alias) => `DATE(${alias}) = '${today}'`)
+				where: {
+					user: email,
+					createdAt: Raw((alias) => `DATE(${alias}) = '${today}'`)
+				}
 			});
 			res.status(200).json(todayStudies);
 		} catch (error) {
@@ -66,11 +81,13 @@ class StudyController {
 		try {
 			const studyRepo = getManager().getRepository(Study);
 			const reviewStudies = await studyRepo.find({
-				user: email,
-				createdAt: Raw(
-					(alias) =>
-						`DATE(${alias}) = '${day1}' or DATE(${alias}) = '${day7}' or DATE(${alias}) = '${day30}'`
-				)
+				where: {
+					user: email,
+					createdAt: Raw(
+						(alias) =>
+							`DATE(${alias}) = '${day1}' or DATE(${alias}) = '${day7}' or DATE(${alias}) = '${day30}'`
+					)
+				}
 			});
 			console.log(reviewStudies);
 			res.status(200).json(reviewStudies);

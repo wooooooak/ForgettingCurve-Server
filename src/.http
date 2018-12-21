@@ -6,13 +6,10 @@ content-type: application/json
     "name" : "sam",
     "photoUrl" : ""
 }
-####
-GET http://localhost:3000/user/test
-auth-header: "sdfsefsdf"
 
-### getAll (study)
-GET http://localhost:3000/study/all
-auth-header: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhbUBnbWFpbC5jb20iLCJuYW1lIjoic2FtIiwicGhvdG9VcmwiOiIiLCJpYXQiOjE1NDUyOTA5ODMsImV4cCI6MTU0NTg5NTc4MywiaXNzIjoibGVleW9uZ2p1biJ9.FNoI_HrRQabMRZx2LNKO7gc7GN0xbVv2QGsoYeUuvUQ
+### getAll (History study)
+GET http://localhost:3000/study/all/0
+auth-header: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Indvb29vb29ha0BnbWFpbC5jb20iLCJuYW1lIjoiTEVFWkVQIiwicGhvdG9VcmwiOiJodHRwczovL2xoMy5nb29nbGV1c2VyY29udGVudC5jb20vLTZuNERSay1sS2JrL0FBQUFBQUFBQUFJL0FBQUFBQUFBRzdzL0JGLXo3VFdBWU5JL3Bob3RvLmpwZyIsImlhdCI6MTU0NTM2NDc1MywiZXhwIjoxNTQ1OTY5NTUzLCJpc3MiOiJsZWV5b25nanVuIn0.p-3CvGcUnbIUrKY7HX4ppOeags_xRac0g944388gbOo
 
 ### addStudy
 POST http://localhost:3000/study/
@@ -20,9 +17,8 @@ content-type: application/json
 auth-header: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Indvb29vb29ha0BnbWFpbC5jb20iLCJuYW1lIjoiTEVFWkVQIiwicGhvdG9VcmwiOiJodHRwczovL2xoMy5nb29nbGV1c2VyY29udGVudC5jb20vLTZuNERSay1sS2JrL0FBQUFBQUFBQUFJL0FBQUFBQUFBRzdzL0JGLXo3VFdBWU5JL3Bob3RvLmpwZyIsImlhdCI6MTU0NTM2NDc1MywiZXhwIjoxNTQ1OTY5NTUzLCJpc3MiOiJsZWV5b25nanVuIn0.p-3CvGcUnbIUrKY7HX4ppOeags_xRac0g944388gbOo
 
 {
-    "title": "first",
-    "content": "content!",
-    "createdAt": "2018-11-19 14:02:22.239097"
+    "title": "dddddDDDDD",
+    "content": "123"
 }
 
 ### get TODAY STUDIES

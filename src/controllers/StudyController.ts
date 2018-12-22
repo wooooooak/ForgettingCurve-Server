@@ -6,28 +6,32 @@ import { User } from '../models/User';
 import { Study } from '../models/Study';
 
 class StudyController {
-	//10일 단위로 데이터를 뿌려주자
 	public getAll = async (req: express.Request, res: express.Response) => {
 		try {
 			const { email } = req.decodedUser!;
 			const { offset } = req.params;
-			const prevDay = moment().add(-offset - 9, 'd').format('YYYY-MM-DD');
-			const postDay = moment().add(-offset, 'd').format('YYYY-MM-DD');
+			// const prevDay = moment().add(-offset - 9, 'd').format('YYYY-MM-DD');
+			// const postDay = moment().add(-offset, 'd').format('YYYY-MM-DD');
 			const studyRepo = getManager().getRepository(Study);
 			const stories = await studyRepo.find({
 				where: {
-					user: email,
-					createdAt: Raw(
-						(alias) =>
-							`DATE(${alias}) BETWEEN  '${prevDay}' AND '${postDay}'`
-					)
+					user: email
+					// createdAt: Raw(
+					// 	(alias) =>
+					// 		`DATE(${alias}) BETWEEN  '${prevDay}' AND '${postDay}'`
+					// )
 				},
+				skip: offset,
+				take: 20,
 				order: {
 					createdAt: 'DESC'
 				}
 			});
-
-			res.status(200).json(stories);
+			if (stories.length === 0) {
+				res.status(200).json({ isDataRemain: false, stories });
+			} else {
+				res.status(200).json({ isDataRemain: true, stories });
+			}
 		} catch (error) {
 			res.status(500).json(error);
 		}

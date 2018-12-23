@@ -1,6 +1,6 @@
 import * as express from 'express';
 import { getManager, createConnection, Raw } from 'typeorm';
-import * as moment from 'moment';
+import * as moment from 'moment-timezone';
 
 import { User } from '../models/User';
 import { Study } from '../models/Study';
@@ -10,16 +10,10 @@ class StudyController {
 		try {
 			const { email } = req.decodedUser!;
 			const { offset } = req.params;
-			// const prevDay = moment().add(-offset - 9, 'd').format('YYYY-MM-DD');
-			// const postDay = moment().add(-offset, 'd').format('YYYY-MM-DD');
 			const studyRepo = getManager().getRepository(Study);
 			const stories = await studyRepo.find({
 				where: {
 					user: email
-					// createdAt: Raw(
-					// 	(alias) =>
-					// 		`DATE(${alias}) BETWEEN  '${prevDay}' AND '${postDay}'`
-					// )
 				},
 				skip: offset,
 				take: 20,
@@ -64,13 +58,19 @@ class StudyController {
 		res: express.Response
 	) => {
 		const { email } = req.decodedUser!;
-		const today = moment().format('YYYY-MM-DD');
+		const { timeoffset } = req.query;
+		const todayStart = moment().startOf('day').subtract(timeoffset, 'm');
+		const todayStartString = todayStart.format('YYYY-MM-DD HH:00:00');
+		const todayEnd = todayStart.add(1, 'd').format('YYYY-MM-DD HH:00:00');
 		try {
 			const studyRepo = getManager().getRepository(Study);
 			const todayStudies = await studyRepo.find({
 				where: {
 					user: email,
-					createdAt: Raw((alias) => `DATE(${alias}) = '${today}'`)
+					createdAt: Raw(
+						(alias) =>
+							`DATE(${alias}) BETWEEN '${todayStartString}' AND '${todayEnd}'`
+					)
 				}
 			});
 			res.status(200).json(todayStudies);
@@ -84,9 +84,18 @@ class StudyController {
 		res: express.Response
 	) => {
 		const { email } = req.decodedUser!;
-		const day1 = moment().add(-1, 'd').format('YYYY-MM-DD');
-		const day7 = moment().add(-7, 'd').format('YYYY-MM-DD');
-		const day30 = moment().add(-30, 'd').format('YYYY-MM-DD');
+		const { timeoffset } = req.query;
+		console.log('utc-offset : ', timeoffset);
+		//오늘의 시작
+		let baseDay = moment().startOf('day').subtract(timeoffset, 'm');
+		const day1Start = baseDay.add(-1, 'd').format('YYYY-MM-DD HH:00:00');
+		const day1End = baseDay.add(1, 'd').format('YYYY-MM-DD HH:00:00');
+		baseDay = moment().startOf('day').subtract(timeoffset, 'm');
+		const day7Start = baseDay.add(-8, 'd').format('YYYY-MM-DD HH:00:00');
+		const day7End = baseDay.add(1, 'd').format('YYYY-MM-DD HH:00:00');
+		baseDay = moment().startOf('day').subtract(timeoffset, 'm');
+		const day30Start = baseDay.add(-30, 'd').format('YYYY-MM-DD HH:00:00');
+		const day30End = baseDay.add(1, 'd').format('YYYY-MM-DD HH:00:00');
 		try {
 			const studyRepo = getManager().getRepository(Study);
 			const reviewStudies = await studyRepo.find({
@@ -94,11 +103,12 @@ class StudyController {
 					user: email,
 					createdAt: Raw(
 						(alias) =>
-							`DATE(${alias}) = '${day1}' or DATE(${alias}) = '${day7}' or DATE(${alias}) = '${day30}'`
+							`DATE(${alias}) BETWEEN '${day1Start}' AND '${day1End}' 
+								or DATE(${alias}) BETWEEN '${day7Start}' AND '${day7End}' or 
+									DATE(${alias}) BETWEEN '${day30Start}' AND '${day30End}'`
 					)
 				}
 			});
-			console.log(reviewStudies);
 			res.status(200).json(reviewStudies);
 		} catch (error) {
 			console.log(error);

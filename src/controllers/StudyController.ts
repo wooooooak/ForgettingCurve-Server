@@ -61,7 +61,10 @@ class StudyController {
 		const { timeoffset } = req.query;
 		const todayStart = moment().startOf('day').subtract(timeoffset, 'm');
 		const todayStartString = todayStart.format('YYYY-MM-DD HH:00:00');
-		const todayEnd = todayStart.add(1, 'd').format('YYYY-MM-DD HH:00:00');
+		const todayEnd = todayStart
+			.add(1, 'd')
+			.subtract(1, 'ms')
+			.format('YYYY-MM-DD HH:mm:ss');
 		try {
 			const studyRepo = getManager().getRepository(Study);
 			const todayStudies = await studyRepo.find({
@@ -89,13 +92,22 @@ class StudyController {
 		//오늘의 시작
 		let baseDay = moment().startOf('day').subtract(timeoffset, 'm');
 		const day1Start = baseDay.add(-1, 'd').format('YYYY-MM-DD HH:00:00');
-		const day1End = baseDay.add(1, 'd').format('YYYY-MM-DD HH:00:00');
+		const day1End = baseDay
+			.add(1, 'd')
+			.subtract(1, 'ms')
+			.format('YYYY-MM-DD HH:mm:ss');
 		baseDay = moment().startOf('day').subtract(timeoffset, 'm');
 		const day7Start = baseDay.add(-8, 'd').format('YYYY-MM-DD HH:00:00');
-		const day7End = baseDay.add(1, 'd').format('YYYY-MM-DD HH:00:00');
+		const day7End = baseDay
+			.add(1, 'd')
+			.subtract(1, 'ms')
+			.format('YYYY-MM-DD HH:mm:ss');
 		baseDay = moment().startOf('day').subtract(timeoffset, 'm');
 		const day30Start = baseDay.add(-30, 'd').format('YYYY-MM-DD HH:00:00');
-		const day30End = baseDay.add(1, 'd').format('YYYY-MM-DD HH:00:00');
+		const day30End = baseDay
+			.add(1, 'd')
+			.subtract(1, 'ms')
+			.format('YYYY-MM-DD HH:mm:ss');
 		try {
 			const studyRepo = getManager().getRepository(Study);
 			const reviewStudies = await studyRepo.find({

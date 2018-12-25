@@ -30,5 +30,10 @@ export default class StudyRouter {
 			AuthMiddleWare.authByToken,
 			new StudyController().getReviewStudies
 		);
+		this.router.delete(
+			'/:id',
+			AuthMiddleWare.authByToken,
+			new StudyController().deleteStudy
+		);
 	}
 }

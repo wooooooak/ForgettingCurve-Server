@@ -48,7 +48,7 @@ class StudyController {
 				newStudy.title = title;
 				newStudy.content = content;
 				newStudy.user = user;
-				newStudy.createdAt = '2018-12-19';
+				newStudy.reviewDay = moment().add(1, 'd').utc().toDate();
 			}
 			await studyRepo.save(newStudy);
 			res.status(200).json(newStudy);
@@ -128,20 +128,8 @@ class StudyController {
 		console.log('utc-offset : ', timeoffset);
 		//오늘의 시작
 		let baseDay = moment().startOf('day').subtract(timeoffset, 'm');
-		const day1Start = baseDay.add(-1, 'd').format('YYYY-MM-DD HH:00:00');
+		const day1Start = baseDay.format('YYYY-MM-DD HH:00:00');
 		const day1End = baseDay
-			.add(1, 'd')
-			.subtract(1, 'ms')
-			.format('YYYY-MM-DD HH:mm:ss');
-		baseDay = moment().startOf('day').subtract(timeoffset, 'm');
-		const day7Start = baseDay.add(-8, 'd').format('YYYY-MM-DD HH:00:00');
-		const day7End = baseDay
-			.add(1, 'd')
-			.subtract(1, 'ms')
-			.format('YYYY-MM-DD HH:mm:ss');
-		baseDay = moment().startOf('day').subtract(timeoffset, 'm');
-		const day30Start = baseDay.add(-30, 'd').format('YYYY-MM-DD HH:00:00');
-		const day30End = baseDay
 			.add(1, 'd')
 			.subtract(1, 'ms')
 			.format('YYYY-MM-DD HH:mm:ss');
@@ -150,11 +138,9 @@ class StudyController {
 			const reviewStudies = await studyRepo.find({
 				where: {
 					user: email,
-					createdAt: Raw(
+					reviewDay: Raw(
 						(alias) =>
-							`DATE(${alias}) BETWEEN '${day1Start}' AND '${day1End}' 
-								or DATE(${alias}) BETWEEN '${day7Start}' AND '${day7End}' or 
-									DATE(${alias}) BETWEEN '${day30Start}' AND '${day30End}'`
+							`DATE(${alias}) BETWEEN '${day1Start}' AND '${day1End}'`
 					)
 				}
 			});

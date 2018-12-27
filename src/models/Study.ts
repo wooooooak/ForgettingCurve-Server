@@ -15,10 +15,13 @@ export class Study {
     @ManyToOne(type => User, user => user.studies)
     user!: User
 
+    @Column("datetime")
+    reviewDay!: Date;
+
     @CreateDateColumn({ type: "datetime"})
-    createdAt!: string;
+    createdAt!: Date;
 
     @UpdateDateColumn({ type: "datetime" })
-    updatedAt!: number;
+    updatedAt!: Date;
 
 }

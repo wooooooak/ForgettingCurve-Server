@@ -12,6 +12,12 @@ export class Study {
     @Column("text")
     content!: string;
 
+    @Column({
+        default: 1,
+        type: "integer"
+    })
+    cycle!: number;
+
     @ManyToOne(type => User, user => user.studies)
     user!: User
 

@@ -4,36 +4,43 @@ import AuthMiddleWare from '../middleware/auth';
 
 export default class StudyRouter {
 	public router: Router;
+	public studyController: StudyController;
 	constructor() {
+		this.studyController = new StudyController();
 		this.router = Router();
 		this.routes();
 	}
 
-	private routes(): void {
+	private routes = (): void => {
 		this.router.get(
 			'/all/:offset',
 			AuthMiddleWare.authByToken,
-			new StudyController().getAll
+			this.studyController.getAll
 		);
 		this.router.post(
 			'/',
 			AuthMiddleWare.authByToken,
-			new StudyController().addStudy
+			this.studyController.addStudy
 		);
 		this.router.get(
 			'/todayStudies',
 			AuthMiddleWare.authByToken,
-			new StudyController().getTodayStudies
+			this.studyController.getTodayStudies
 		);
 		this.router.get(
 			'/reviewStudies',
 			AuthMiddleWare.authByToken,
-			new StudyController().getReviewStudies
+			this.studyController.getReviewStudies
 		);
 		this.router.delete(
 			'/:id',
 			AuthMiddleWare.authByToken,
-			new StudyController().deleteStudy
+			this.studyController.deleteStudy
 		);
-	}
+		this.router.put(
+			'/postpone/:id',
+			AuthMiddleWare.authByToken,
+			this.studyController.postpone
+		);
+	};
 }

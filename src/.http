@@ -14,6 +14,10 @@ GET http://localhost:3000/study/all/10
 DELETE http://localhost:3000/study/125
 auth-header: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhbUBnbWFpbC5jb20iLCJuYW1lIjoic2FtIiwicGhvdG9VcmwiOiIiLCJpYXQiOjE1NDU4OTE2NTUsImV4cCI6MTU0NjQ5NjQ1NSwiaXNzIjoibGVleW9uZ2p1biJ9.1qDqHVW-czoJEAaEPtykilIVaup-aSO1AWUwQW1oVWQ
 
+### postpone 
+PUT http://localhost:3000/study/postpone/8
+auth-header: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhbUBnbWFpbC5jb20iLCJuYW1lIjoic2FtIiwicGhvdG9VcmwiOiIiLCJpYXQiOjE1NDU4OTE2NTUsImV4cCI6MTU0NjQ5NjQ1NSwiaXNzIjoibGVleW9uZ2p1biJ9.1qDqHVW-czoJEAaEPtykilIVaup-aSO1AWUwQW1oVWQ
+
 ### addStudy
 POST http://localhost:3000/study/
 content-type: application/json

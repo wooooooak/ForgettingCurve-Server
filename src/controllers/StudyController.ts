@@ -11,6 +11,62 @@ import { User } from '../models/User';
 import { Study } from '../models/Study';
 
 class StudyController {
+	public postpone = async (req: express.Request, res: express.Response) => {
+		try {
+			const { id } = req.params;
+			const { email } = req.decodedUser!;
+			const studyRepo = getManager().getRepository(Study);
+			const data = await studyRepo.findOne({
+				where: {
+					user: email,
+					id
+				}
+			});
+			if (data) {
+				console.log(moment(data.reviewDay).add(1, 'd'));
+				data.reviewDay = moment(data.reviewDay).add(1, 'd').toDate();
+				await studyRepo.save(data);
+				res.status(200).json(data);
+			} else {
+				res.status(200).json(data);
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	public deleteStudy = async (
+		req: express.Request,
+		res: express.Response
+	) => {
+		const { id } = req.params;
+		try {
+			const { email } = req.decodedUser!;
+			const {
+				raw
+			} = await getManager()
+				.createQueryBuilder()
+				.delete()
+				.from(Study)
+				.where('id = :id and userEmail = :email ', { id, email })
+				.execute();
+			console.log(raw.affectedRows);
+			if (!raw.affectedRows) {
+				res.status(200).json({
+					message: '올바르지 못한 접근이거나, 해당 id의 study가 없습니다.',
+					affectedRows: raw.affectedRows
+				});
+			} else {
+				res.status(200).json({
+					message: '정상적으로 삭제 되었습니다.',
+					affectedRows: raw.affectedRows
+				});
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
 	public getAll = async (req: express.Request, res: express.Response) => {
 		try {
 			const { email } = req.decodedUser!;
@@ -55,38 +111,6 @@ class StudyController {
 		} catch (error) {
 			console.log(error);
 			res.status(500).json(error);
-		}
-	};
-
-	public deleteStudy = async (
-		req: express.Request,
-		res: express.Response
-	) => {
-		const { id } = req.params;
-		try {
-			const { email } = req.decodedUser!;
-			const {
-				raw
-			} = await getManager()
-				.createQueryBuilder()
-				.delete()
-				.from(Study)
-				.where('id = :id and userEmail = :email ', { id, email })
-				.execute();
-			console.log(raw.affectedRows);
-			if (!raw.affectedRows) {
-				res.status(200).json({
-					message: '올바르지 못한 접근이거나, 해당 id의 study가 없습니다.',
-					affectedRows: raw.affectedRows
-				});
-			} else {
-				res.status(200).json({
-					message: '정상적으로 삭제 되었습니다.',
-					affectedRows: raw.affectedRows
-				});
-			}
-		} catch (error) {
-			console.log(error);
 		}
 	};
 

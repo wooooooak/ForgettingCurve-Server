@@ -11,6 +11,38 @@ import { User } from '../models/User';
 import { Study } from '../models/Study';
 
 class StudyController {
+	public complete = async (req: express.Request, res: express.Response) => {
+		try {
+			const { id } = req.params;
+			const { email } = req.decodedUser!;
+			const studyRepo = getManager().getRepository(Study);
+			const data = await studyRepo.findOne({
+				where: {
+					user: email,
+					id
+				}
+			});
+			if (data) {
+				if (data.cycle === 1) {
+					data.reviewDay = moment(data.reviewDay)
+						.add(7, 'd')
+						.toDate();
+				} else if (data.cycle === 2) {
+					data.reviewDay = moment(data.reviewDay)
+						.add(30, 'd')
+						.toDate();
+				}
+				data.cycle += 1;
+				await studyRepo.save(data);
+				res.status(200).json(data);
+			} else {
+				res.status(200).json({ message: '접근이 잘못 되었습니다.' });
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
 	public postpone = async (req: express.Request, res: express.Response) => {
 		try {
 			const { id } = req.params;

@@ -42,5 +42,10 @@ export default class StudyRouter {
 			AuthMiddleWare.authByToken,
 			this.studyController.postpone
 		);
+		this.router.put(
+			'/completion/:id',
+			AuthMiddleWare.authByToken,
+			this.studyController.complete
+		);
 	};
 }

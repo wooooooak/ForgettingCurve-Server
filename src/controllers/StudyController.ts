@@ -1,10 +1,5 @@
 import * as express from 'express';
-import {
-	getManager,
-	createConnection,
-	Raw,
-	RelationQueryBuilder
-} from 'typeorm';
+import { getManager, Raw } from 'typeorm';
 import * as moment from 'moment-timezone';
 
 import { User } from '../models/User';
@@ -136,7 +131,7 @@ class StudyController {
 				newStudy.title = title;
 				newStudy.content = content;
 				newStudy.user = user;
-				newStudy.reviewDay = moment().add(1, 'd').utc().toDate();
+				newStudy.reviewDay = moment().utc().add(1, 'd').toDate();
 			}
 			await studyRepo.save(newStudy);
 			res.status(200).json(newStudy);

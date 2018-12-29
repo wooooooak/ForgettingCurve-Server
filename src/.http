@@ -28,8 +28,8 @@ content-type: application/json
 auth-header: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhbUBnbWFpbC5jb20iLCJuYW1lIjoic2FtIiwicGhvdG9VcmwiOiIiLCJpYXQiOjE1NDU4OTE2NTUsImV4cCI6MTU0NjQ5NjQ1NSwiaXNzIjoibGVleW9uZ2p1biJ9.1qDqHVW-czoJEAaEPtykilIVaup-aSO1AWUwQW1oVWQ
 
 {
-    "title": "test5",
-    "content": "123!!!"
+    "title": "유티씨테스트",
+    "content": "한글입니다"
 }
 
 ### get TODAY STUDIES
@@ -38,4 +38,9 @@ auth-header: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhbUBnbWFpbC5jb2
 
 ### get REVEIW STUDIES
 GET http://localhost:3000/study/reviewStudies?timeoffset=540
+auth-header: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhbUBnbWFpbC5jb20iLCJuYW1lIjoic2FtIiwicGhvdG9VcmwiOiIiLCJpYXQiOjE1NDU4OTE2NTUsImV4cCI6MTU0NjQ5NjQ1NSwiaXNzIjoibGVleW9uZ2p1biJ9.1qDqHVW-czoJEAaEPtykilIVaup-aSO1AWUwQW1oVWQ
+
+
+### get saying
+GET http://localhost:3000/saying
 auth-header: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhbUBnbWFpbC5jb20iLCJuYW1lIjoic2FtIiwicGhvdG9VcmwiOiIiLCJpYXQiOjE1NDU4OTE2NTUsImV4cCI6MTU0NjQ5NjQ1NSwiaXNzIjoibGVleW9uZ2p1biJ9.1qDqHVW-czoJEAaEPtykilIVaup-aSO1AWUwQW1oVWQ

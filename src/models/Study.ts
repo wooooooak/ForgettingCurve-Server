@@ -24,7 +24,7 @@ export class Study {
     @Column("datetime")
     reviewDay!: Date;
 
-    @CreateDateColumn({ type: "datetime"})
+    @CreateDateColumn({ type: "datetime" })
     createdAt!: Date;
 
     @UpdateDateColumn({ type: "datetime" })
